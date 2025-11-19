@@ -10,10 +10,10 @@ export const exportInvestmentToPDF = (investment: Investment): void => {
     const margin = 20;
     let yPosition = margin;
 
-    // Cores
-    const primaryColor = [37, 99, 235]; // #2563EB
-    const textColor = [17, 24, 39]; // #111827
-    const grayColor = [107, 114, 128]; // #6B7280
+    // Cores (tuplas para TypeScript)
+    const primaryColor: [number, number, number] = [37, 99, 235]; // #2563EB
+    const textColor: [number, number, number] = [17, 24, 39]; // #111827
+    const grayColor: [number, number, number] = [107, 114, 128]; // #6B7280
 
     // Título
     doc.setFontSize(20);
@@ -80,7 +80,7 @@ export const exportInvestmentToPDF = (investment: Investment): void => {
     doc.setTextColor(...grayColor);
     doc.setFont('helvetica', 'normal');
     doc.text('Diferença (Resto):', margin, yPosition);
-    const diffColor = investment.difference >= 0 ? [37, 99, 235] : [220, 38, 38];
+    const diffColor: [number, number, number] = investment.difference >= 0 ? [37, 99, 235] : [220, 38, 38];
     doc.setTextColor(...diffColor);
     doc.setFont('helvetica', 'bold');
     const diffText = `${formatCurrency(Math.abs(investment.difference))}${
