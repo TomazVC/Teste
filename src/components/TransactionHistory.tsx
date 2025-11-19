@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Investment } from '../types/asset';
 import { formatDate, formatCurrency } from '../utils/calculations';
 import { AssetTypeLabels, isUnitBased } from '../types/asset';
 import { storage } from '../utils/storage';
 import { exportInvestmentToPDF } from '../utils/pdfExport';
+import { filterInvestmentsByPeriod, sortInvestments, InvestmentSortBy, InvestmentSortOrder } from '../utils/filters';
 
 interface TransactionHistoryProps {
   investments: Investment[];
@@ -14,6 +15,12 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  
+  // Estados para filtros e ordenação
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [sortBy, setSortBy] = useState<InvestmentSortBy>('date');
+  const [sortOrder, setSortOrder] = useState<InvestmentSortOrder>('desc');
 
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
@@ -27,14 +34,6 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
       newSelected.add(id);
     }
     setSelectedIds(newSelected);
-  };
-
-  const selectAll = () => {
-    if (selectedIds.size === investments.length) {
-      setSelectedIds(new Set());
-    } else {
-      setSelectedIds(new Set(investments.map((inv) => inv.id)));
-    }
   };
 
   const handleDelete = () => {
@@ -56,6 +55,40 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
     }
   };
 
+  // Aplicar filtros e ordenação
+  const filteredAndSortedInvestments = useMemo(() => {
+    let result = [...investments];
+    
+    // Filtrar por período
+    result = filterInvestmentsByPeriod(
+      result,
+      startDate || null,
+      endDate || null
+    );
+    
+    // Ordenar
+    result = sortInvestments(result, sortBy, sortOrder);
+    
+    return result;
+  }, [investments, startDate, endDate, sortBy, sortOrder]);
+
+  const selectAll = useCallback(() => {
+    if (selectedIds.size === filteredAndSortedInvestments.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredAndSortedInvestments.map((inv) => inv.id)));
+    }
+  }, [selectedIds.size, filteredAndSortedInvestments]);
+
+  const handleClearFilters = () => {
+    setStartDate('');
+    setEndDate('');
+    setSortBy('date');
+    setSortOrder('desc');
+  };
+
+  const hasActiveFilters = startDate !== '' || endDate !== '' || sortBy !== 'date' || sortOrder !== 'desc';
+
   if (investments.length === 0) {
     return (
       <div className="text-center py-12">
@@ -64,7 +97,7 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
     );
   }
 
-  const allSelected = selectedIds.size === investments.length && investments.length > 0;
+  const allSelected = selectedIds.size === filteredAndSortedInvestments.length && filteredAndSortedInvestments.length > 0;
   const hasSelection = selectedIds.size > 0;
 
   return (
@@ -92,6 +125,112 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
           )}
         </div>
       </div>
+
+      {investments.length > 0 && (
+        <div className="futuristic-card p-4 sm:p-6 space-y-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            {/* Filtro por período - Data inicial */}
+            <div className="flex-1">
+              <label htmlFor="startDate" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                Data inicial
+              </label>
+              <input
+                id="startDate"
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="futuristic-input text-base"
+              />
+            </div>
+
+            {/* Filtro por período - Data final */}
+            <div className="flex-1">
+              <label htmlFor="endDate" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                Data final
+              </label>
+              <input
+                id="endDate"
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                min={startDate || undefined}
+                className="futuristic-input text-base"
+              />
+            </div>
+
+            {/* Ordenação */}
+            <div className="flex-1">
+              <label htmlFor="sortBy" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                Ordenar por
+              </label>
+              <div className="flex gap-2">
+                <select
+                  id="sortBy"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as InvestmentSortBy)}
+                  className="futuristic-select flex-1 text-base"
+                >
+                  <option value="date">Data</option>
+                  <option value="executedValue">Valor executado</option>
+                  <option value="name">Nome</option>
+                </select>
+                <button
+                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 min-h-[44px] flex items-center justify-center"
+                  title={sortOrder === 'asc' ? 'Crescente' : 'Decrescente'}
+                >
+                  {sortOrder === 'asc' ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Contador e botão limpar */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-2 border-t border-gray-200">
+            <p className="text-xs sm:text-sm text-gray-600">
+              {filteredAndSortedInvestments.length === investments.length ? (
+                <span>{filteredAndSortedInvestments.length} transação(ões) registrada(s)</span>
+              ) : (
+                <span>
+                  Mostrando {filteredAndSortedInvestments.length} de {investments.length} transação(ões)
+                </span>
+              )}
+            </p>
+            {hasActiveFilters && (
+              <button
+                onClick={handleClearFilters}
+                className="text-xs sm:text-sm text-futuristic-blue-600 hover:text-futuristic-blue-700 font-medium transition-colors duration-200"
+              >
+                Limpar filtros
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {investments.length > 0 && filteredAndSortedInvestments.length === 0 && (
+        <div className="text-center py-12 sm:py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 px-4">
+          <p className="text-gray-500 text-base sm:text-lg mb-4">
+            Nenhuma transação encontrada com os filtros aplicados.
+          </p>
+          {hasActiveFilters && (
+            <button
+              onClick={handleClearFilters}
+              className="futuristic-button text-sm sm:text-base min-h-[44px]"
+            >
+              Limpar Filtros
+            </button>
+          )}
+        </div>
+      )}
 
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm p-3 sm:p-4">
@@ -121,7 +260,7 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
         </div>
       )}
       
-      {investments.map((investment) => {
+            {filteredAndSortedInvestments.map((investment) => {
         const isSelected = selectedIds.has(investment.id);
         
         return (
