@@ -63,6 +63,12 @@ export const storage = {
     storage.saveInvestments(investments);
   },
 
+  deleteInvestments: (investmentIds: string[]): void => {
+    const investments = storage.getInvestments();
+    const filtered = investments.filter((inv) => !investmentIds.includes(inv.id));
+    storage.saveInvestments(filtered);
+  },
+
   // Monthly Portfolio
   getMonthlyPortfolio: (): MonthlyPortfolio[] => {
     try {

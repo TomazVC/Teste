@@ -74,7 +74,9 @@ function App() {
         {view === 'dashboard' && (
           <Dashboard assets={assets} onAssetsUpdate={handleAssetsUpdate} />
         )}
-        {view === 'history' && <TransactionHistory investments={investments} />}
+        {view === 'history' && (
+          <TransactionHistory investments={investments} onInvestmentsUpdate={handleAssetsUpdate} />
+        )}
         {view === 'analytics' && (
           <PortfolioAnalytics assets={assets} investments={investments} />
         )}
