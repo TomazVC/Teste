@@ -15,11 +15,11 @@ export const AssetTypeLabels: Record<AssetType, string> = {
 };
 
 export const AssetTypeColors: Record<AssetType, string> = {
-  [AssetType.ACAO]: '#2563EB', // Blue 600
-  [AssetType.FII]: '#1D4ED8', // Blue 700
-  [AssetType.ETF_BR]: '#1E40AF', // Blue 800
-  [AssetType.ETF_GB]: '#3B82F6', // Blue 500
-  [AssetType.CRIPTO]: '#60A5FA', // Blue 400
+  [AssetType.ACAO]: '#e63946',
+  [AssetType.FII]: '#00b4d8',
+  [AssetType.ETF_BR]: '#9b5de5',
+  [AssetType.ETF_GB]: '#ffd60a',
+  [AssetType.CRIPTO]: '#90ee90',
 };
 
 export const isUnitBased = (type: AssetType): boolean => {

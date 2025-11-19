@@ -1,5 +1,5 @@
 import { Asset, InvestmentItem } from '../types/asset';
-import { isUnitBased, isValueBased } from '../types/asset';
+import { isUnitBased, isValueBased, AssetTypeColors } from '../types/asset';
 
 interface InvestmentStep2Props {
   assets: Asset[];
@@ -65,7 +65,7 @@ export const InvestmentStep2 = ({
               key={asset.id}
               className="futuristic-card p-4 sm:p-6 border-l-4"
               style={{
-                borderLeftColor: isUnit ? '#2563EB' : '#3B82F6',
+                borderLeftColor: AssetTypeColors[asset.type],
               }}
             >
               <div className="flex justify-between items-start mb-3 sm:mb-4">
