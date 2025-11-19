@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .futuristic-card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+  
+  .futuristic-button {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply bg-futuristic-blue-600 text-white hover:bg-futuristic-blue-700;
+    @apply active:scale-95 shadow-sm hover:shadow-md;
+  }
+  
+  .futuristic-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-futuristic-blue-500 focus:border-transparent;
+    @apply transition-all duration-200 bg-white;
+  }
+  
+  .futuristic-select {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-futuristic-blue-500 focus:border-transparent;
+    @apply transition-all duration-200 bg-white;
+  }
+}
+
