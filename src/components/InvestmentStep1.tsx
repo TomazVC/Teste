@@ -22,12 +22,12 @@ export const InvestmentStep1 = ({
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">Passo 1: Definição Inicial</h2>
-      <p className="text-gray-600 mb-8">Defina o valor total planejado e a data do aporte</p>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Passo 1: Definição Inicial</h2>
+      <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">Defina o valor total planejado e a data do aporte</p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
-          <label htmlFor="plannedValue" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="plannedValue" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
             Valor Total Planejado (R$)
           </label>
           <input
@@ -37,14 +37,14 @@ export const InvestmentStep1 = ({
             min="0"
             value={plannedValue || ''}
             onChange={(e) => onPlannedValueChange(parseFloat(e.target.value) || 0)}
-            className="futuristic-input"
+            className="futuristic-input text-base"
             placeholder="0.00"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="date" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
             Data do Aporte
           </label>
           <input
@@ -52,16 +52,16 @@ export const InvestmentStep1 = ({
             type="date"
             value={date}
             onChange={(e) => onDateChange(e.target.value)}
-            className="futuristic-input"
+            className="futuristic-input text-base"
             required
           />
         </div>
 
-        <div className="flex justify-end pt-4">
+        <div className="flex justify-end pt-3 sm:pt-4">
           <button
             type="submit"
             disabled={plannedValue <= 0 || !date}
-            className="futuristic-button disabled:opacity-50 disabled:cursor-not-allowed"
+            className="futuristic-button disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[44px] text-sm sm:text-base"
           >
             Próximo
           </button>

@@ -28,16 +28,18 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <nav className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-futuristic-blue-600">S²</h1>
-              <span className="ml-2 text-sm text-gray-500">Stonks ao Quadrado</span>
+              <h1 className="text-xl sm:text-2xl font-bold text-futuristic-blue-600">S²</h1>
+              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-500 hidden sm:inline">
+                Stonks ao Quadrado
+              </span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2">
               <button
                 onClick={() => setView('dashboard')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                className={`px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 min-h-[44px] ${
                   view === 'dashboard'
                     ? 'bg-futuristic-blue-600 text-white'
                     : 'text-gray-600 hover:bg-gray-100'
@@ -47,7 +49,7 @@ function App() {
               </button>
               <button
                 onClick={() => setView('history')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                className={`px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 min-h-[44px] ${
                   view === 'history'
                     ? 'bg-futuristic-blue-600 text-white'
                     : 'text-gray-600 hover:bg-gray-100'
@@ -57,7 +59,7 @@ function App() {
               </button>
               <button
                 onClick={() => setView('analytics')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                className={`px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 min-h-[44px] ${
                   view === 'analytics'
                     ? 'bg-futuristic-blue-600 text-white'
                     : 'text-gray-600 hover:bg-gray-100'
@@ -70,7 +72,7 @@ function App() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8">
         {view === 'dashboard' && (
           <Dashboard assets={assets} onAssetsUpdate={handleAssetsUpdate} />
         )}

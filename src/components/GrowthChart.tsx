@@ -53,26 +53,34 @@ export const GrowthChart = ({ portfolio }: GrowthChartProps) => {
   };
 
   return (
-    <div className="w-full h-96">
+    <div className="w-full h-64 sm:h-80 lg:h-96">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 40 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
           <XAxis
             dataKey="month"
             stroke="#6B7280"
-            style={{ fontSize: '12px' }}
+            style={{ fontSize: '10px' }}
+            angle={-45}
+            textAnchor="end"
+            height={60}
+            interval={0}
           />
           <YAxis
             stroke="#6B7280"
-            style={{ fontSize: '12px' }}
+            style={{ fontSize: '10px' }}
+            width={50}
             tickFormatter={(value) => {
-              if (value >= 1000000) return `R$ ${(value / 1000000).toFixed(1)}M`;
-              if (value >= 1000) return `R$ ${(value / 1000).toFixed(0)}k`;
-              return `R$ ${value}`;
+              if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+              if (value >= 1000) return `${(value / 1000).toFixed(0)}k`;
+              return `${value}`;
             }}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend />
+          <Legend 
+            wrapperStyle={{ fontSize: '10px', paddingTop: '10px' }} 
+            iconSize={10}
+          />
           <Line
             type="monotone"
             dataKey={AssetTypeLabels[AssetType.ACAO]}

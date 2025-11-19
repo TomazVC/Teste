@@ -26,26 +26,26 @@ export const AssetCard = ({ asset, onClick, onEdit, onDelete }: AssetCardProps) 
   return (
     <div
       onClick={onClick}
-      className="futuristic-card p-6 cursor-pointer hover:border-futuristic-blue-300 transition-all duration-300 relative"
+      className="futuristic-card p-4 sm:p-6 cursor-pointer hover:border-futuristic-blue-300 transition-all duration-300 relative"
       style={{
         borderLeft: `4px solid ${color}`,
       }}
     >
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-1">{asset.name}</h3>
+      <div className="flex justify-between items-start mb-3 sm:mb-4">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1 truncate">{asset.name}</h3>
           <span
-            className="inline-block px-3 py-1 rounded-full text-sm font-medium text-white"
+            className="inline-block px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-white"
             style={{ backgroundColor: color }}
           >
             {AssetTypeLabels[asset.type]}
           </span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2 flex-shrink-0 ml-2">
           {onEdit && (
             <button
               onClick={handleEdit}
-              className="p-2 text-gray-400 hover:text-futuristic-blue-600 hover:bg-futuristic-blue-50 rounded-lg transition-all duration-200"
+              className="p-2 text-gray-400 hover:text-futuristic-blue-600 hover:bg-futuristic-blue-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
               title="Editar ativo"
             >
               <svg
@@ -66,7 +66,7 @@ export const AssetCard = ({ asset, onClick, onEdit, onDelete }: AssetCardProps) 
           {onDelete && (
             <button
               onClick={handleDelete}
-              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
+              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
               title="Remover ativo"
             >
               <svg
@@ -87,20 +87,20 @@ export const AssetCard = ({ asset, onClick, onEdit, onDelete }: AssetCardProps) 
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-3 sm:mt-4">
         <div>
-          <p className="text-sm text-gray-500 mb-1">
+          <p className="text-xs sm:text-sm text-gray-500 mb-1">
             {isUnit ? 'Quantidade' : 'Valor Atual'}
           </p>
-          <p className="text-lg font-semibold text-gray-900">
+          <p className="text-base sm:text-lg font-semibold text-gray-900 break-words">
             {isUnit
               ? `${asset.quantity.toLocaleString('pt-BR')} un`
               : formatCurrency(asset.value)}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500 mb-1">Preço Médio</p>
-          <p className="text-lg font-semibold text-gray-900">
+          <p className="text-xs sm:text-sm text-gray-500 mb-1">Preço Médio</p>
+          <p className="text-base sm:text-lg font-semibold text-gray-900 break-words">
             {isUnit
               ? formatCurrency(asset.averagePrice)
               : formatCurrency(asset.averagePrice)}

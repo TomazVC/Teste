@@ -24,21 +24,21 @@ export const EvolutionTable = ({ portfolio }: EvolutionTableProps) => {
   ];
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+    <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+      <table className="w-full border-collapse min-w-[600px]">
         <thead>
           <tr className="border-b-2 border-gray-300">
-            <th className="text-left py-4 px-4 font-semibold text-gray-900">Mês</th>
+            <th className="text-left py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-900 sticky left-0 bg-white z-10">Mês</th>
             {assetTypes.map((type) => (
               <th
                 key={type}
-                className="text-right py-4 px-4 font-semibold text-gray-900"
+                className="text-right py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap"
                 style={{ color: AssetTypeLabels[type] }}
               >
                 {AssetTypeLabels[type]}
               </th>
             ))}
-            <th className="text-right py-4 px-4 font-semibold text-gray-900">Total</th>
+            <th className="text-right py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -47,13 +47,13 @@ export const EvolutionTable = ({ portfolio }: EvolutionTableProps) => {
               key={index}
               className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200"
             >
-              <td className="py-4 px-4 font-medium text-gray-900">{month.month}</td>
+              <td className="py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">{month.month}</td>
               {assetTypes.map((type) => (
-                <td key={type} className="text-right py-4 px-4 text-gray-700">
+                <td key={type} className="text-right py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm text-gray-700 whitespace-nowrap">
                   {formatCurrency(month.assets[type])}
                 </td>
               ))}
-              <td className="text-right py-4 px-4 font-semibold text-gray-900">
+              <td className="text-right py-3 sm:py-4 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap">
                 {formatCurrency(month.total)}
               </td>
             </tr>

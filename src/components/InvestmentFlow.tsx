@@ -52,15 +52,15 @@ export const InvestmentFlow = ({ assets, onClose, onAssetsUpdate }: InvestmentFl
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[90vh] border border-gray-200 flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm p-2 sm:p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] border border-gray-200 flex flex-col">
         {/* Header Fixo */}
-        <div className="flex-shrink-0 px-8 pt-8 pb-4 border-b border-gray-200">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Realizar Aporte/Investimento</h2>
+        <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-4 border-b border-gray-200">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 pr-2">Realizar Aporte/Investimento</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+              className="text-gray-400 hover:text-gray-600 text-2xl sm:text-3xl font-bold min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               ×
             </button>
@@ -70,7 +70,7 @@ export const InvestmentFlow = ({ assets, onClose, onAssetsUpdate }: InvestmentFl
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center flex-1">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base font-semibold ${
                     step >= s
                       ? 'bg-futuristic-blue-600 text-white'
                       : 'bg-gray-200 text-gray-600'
@@ -80,7 +80,7 @@ export const InvestmentFlow = ({ assets, onClose, onAssetsUpdate }: InvestmentFl
                 </div>
                 {s < 3 && (
                   <div
-                    className={`flex-1 h-1 mx-2 ${
+                    className={`flex-1 h-1 mx-1 sm:mx-2 ${
                       step > s ? 'bg-futuristic-blue-600' : 'bg-gray-200'
                     }`}
                   />
@@ -91,7 +91,7 @@ export const InvestmentFlow = ({ assets, onClose, onAssetsUpdate }: InvestmentFl
         </div>
 
         {/* Conteúdo Scrollável */}
-        <div className="flex-1 overflow-y-auto px-8 py-6">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           {step === 1 && (
             <InvestmentStep1
               plannedValue={plannedValue}

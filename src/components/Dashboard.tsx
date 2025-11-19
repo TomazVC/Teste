@@ -37,22 +37,22 @@ export const Dashboard = ({ assets, onAssetsUpdate }: DashboardProps) => {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Carteira de Investimentos</h1>
-          <p className="text-gray-600 mt-2">Gerencie seus ativos e acompanhe sua evolução</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Carteira de Investimentos</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Gerencie seus ativos e acompanhe sua evolução</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <button
             onClick={() => setIsAddAssetModalOpen(true)}
-            className="futuristic-button"
+            className="futuristic-button w-full sm:w-auto text-sm sm:text-base min-h-[44px]"
           >
             Adicionar Novo Ativo
           </button>
           <button
             onClick={() => setIsInvestmentFlowOpen(true)}
-            className="futuristic-button"
+            className="futuristic-button w-full sm:w-auto text-sm sm:text-base min-h-[44px]"
             disabled={assets.length === 0}
           >
             Realizar Aporte/Investimento
@@ -61,19 +61,19 @@ export const Dashboard = ({ assets, onAssetsUpdate }: DashboardProps) => {
       </div>
 
       {assets.length === 0 ? (
-        <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <p className="text-gray-500 text-lg mb-4">
+        <div className="text-center py-12 sm:py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 px-4">
+          <p className="text-gray-500 text-base sm:text-lg mb-4">
             Nenhum ativo cadastrado ainda.
           </p>
           <button
             onClick={() => setIsAddAssetModalOpen(true)}
-            className="futuristic-button"
+            className="futuristic-button text-sm sm:text-base min-h-[44px]"
           >
             Adicionar Primeiro Ativo
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {assets.map((asset) => (
             <AssetCard
               key={asset.id}

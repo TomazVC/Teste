@@ -58,21 +58,21 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Histórico de Transações</h2>
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Histórico de Transações</h2>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
           {investments.length > 0 && (
             <>
               <button
                 onClick={selectAll}
-                className="px-4 py-2 rounded-lg font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300 text-sm"
+                className="px-4 py-2 rounded-lg font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300 text-xs sm:text-sm min-h-[44px]"
               >
                 {allSelected ? 'Desselecionar Todos' : 'Selecionar Todos'}
               </button>
               {hasSelection && (
                 <button
                   onClick={() => setShowDeleteModal(true)}
-                  className="px-4 py-2 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-300 text-sm"
+                  className="px-4 py-2 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-300 text-xs sm:text-sm min-h-[44px]"
                 >
                   Excluir ({selectedIds.size})
                 </button>
@@ -83,25 +83,25 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
       </div>
 
       {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md mx-4 border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Confirmar Exclusão</h2>
-            <p className="text-gray-700 mb-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm p-3 sm:p-4">
+          <div className="bg-white rounded-xl shadow-2xl p-5 sm:p-8 w-full max-w-md mx-auto border border-gray-200 max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Confirmar Exclusão</h2>
+            <p className="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6">
               Tem certeza que deseja excluir {selectedIds.size} transação(ões) selecionada(s)?
             </p>
-            <p className="text-sm text-amber-600 mb-6">
+            <p className="text-xs sm:text-sm text-amber-600 mb-4 sm:mb-6">
               ⚠️ Esta ação não pode ser desfeita. As transações serão removidas permanentemente.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 px-6 py-3 rounded-lg font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                className="flex-1 px-6 py-3 rounded-lg font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300 min-h-[44px] text-sm sm:text-base"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleDelete}
-                className="flex-1 px-6 py-3 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-300"
+                className="flex-1 px-6 py-3 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-300 min-h-[44px] text-sm sm:text-base"
               >
                 Excluir
               </button>
@@ -116,11 +116,11 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
         return (
           <div
             key={investment.id}
-            className={`futuristic-card p-6 transition-all duration-300 ${
+            className={`futuristic-card p-4 sm:p-6 transition-all duration-300 ${
               isSelected ? 'border-2 border-futuristic-blue-500 bg-blue-50' : 'hover:border-futuristic-blue-300'
             }`}
           >
-            <div className="flex items-start gap-4 mb-4">
+            <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
               <input
                 type="checkbox"
                 checked={isSelected}
@@ -129,40 +129,40 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
                   toggleSelect(investment.id);
                 }}
                 onClick={(e) => e.stopPropagation()}
-                className="mt-1 w-5 h-5 text-futuristic-blue-600 border-gray-300 rounded focus:ring-futuristic-blue-500 cursor-pointer"
+                className="mt-1 w-5 h-5 sm:w-6 sm:h-6 text-futuristic-blue-600 border-gray-300 rounded focus:ring-futuristic-blue-500 cursor-pointer flex-shrink-0"
               />
               <div
-                className="flex-1 cursor-pointer"
+                className="flex-1 cursor-pointer min-w-0"
                 onClick={() => toggleExpand(investment.id)}
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">
                         {formatDate(investment.date)}
                       </h3>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-xs sm:text-sm text-gray-500">
                         {investment.items.length} ativo(s)
                       </span>
                     </div>
                     
-                    <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
                       <div>
                         <span className="text-gray-500">Planejado:</span>
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-semibold text-gray-900 break-words">
                           {formatCurrency(investment.plannedValue)}
                         </p>
                       </div>
                       <div>
                         <span className="text-gray-500">Executado:</span>
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-semibold text-gray-900 break-words">
                           {formatCurrency(investment.executedValue)}
                         </p>
                       </div>
                       <div>
                         <span className="text-gray-500">Diferença:</span>
                         <p
-                          className={`font-semibold ${
+                          className={`font-semibold break-words ${
                             investment.difference >= 0 ? 'text-blue-600' : 'text-red-600'
                           }`}
                         >
@@ -172,9 +172,9 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
                     </div>
                   </div>
                   
-                  <div className="ml-4">
+                  <div className="ml-auto sm:ml-4 flex-shrink-0">
                     <svg
-                      className={`w-6 h-6 text-gray-400 transition-transform duration-300 ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 text-gray-400 transition-transform duration-300 ${
                         expandedId === investment.id ? 'transform rotate-180' : ''
                       }`}
                       fill="none"
@@ -194,35 +194,35 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
             </div>
 
             {expandedId === investment.id && (
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-gray-700 mb-4">Detalhes do Aporte:</h4>
-                <div className="space-y-3">
+              <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
+                <h4 className="text-xs sm:text-sm font-semibold text-gray-700 mb-3 sm:mb-4">Detalhes do Aporte:</h4>
+                <div className="space-y-2 sm:space-y-3">
                   {investment.items.map((item, index) => {
                     const isUnit = isUnitBased(item.assetType);
                     return (
                       <div
                         key={index}
-                        className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                        className="p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200"
                       >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="font-medium text-gray-900">{item.assetName}</p>
-                            <p className="text-sm text-gray-500">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm sm:text-base text-gray-900 break-words">{item.assetName}</p>
+                            <p className="text-xs sm:text-sm text-gray-500">
                               {AssetTypeLabels[item.assetType]}
                             </p>
                           </div>
-                          <div className="text-right">
+                          <div className="text-left sm:text-right">
                             {isUnit ? (
                               <>
-                                <p className="font-semibold text-gray-900">
+                                <p className="font-semibold text-sm sm:text-base text-gray-900 break-words">
                                   {item.quantity} un × {formatCurrency(item.price || 0)}
                                 </p>
-                                <p className="text-sm text-gray-600">
+                                <p className="text-xs sm:text-sm text-gray-600">
                                   = {formatCurrency((item.price || 0) * (item.quantity || 0))}
                                 </p>
                               </>
                             ) : (
-                              <p className="font-semibold text-gray-900">
+                              <p className="font-semibold text-sm sm:text-base text-gray-900 break-words">
                                 {formatCurrency(item.investedValue || 0, item.currency || 'BRL')}
                               </p>
                             )}
