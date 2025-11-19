@@ -3,6 +3,7 @@ import { Investment } from '../types/asset';
 import { formatDate, formatCurrency } from '../utils/calculations';
 import { AssetTypeLabels, isUnitBased } from '../types/asset';
 import { storage } from '../utils/storage';
+import { exportInvestmentToPDF } from '../utils/pdfExport';
 
 interface TransactionHistoryProps {
   investments: Investment[];
@@ -42,6 +43,16 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
       setSelectedIds(new Set());
       setShowDeleteModal(false);
       onInvestmentsUpdate();
+    }
+  };
+
+  const handleExportPDF = (investment: Investment, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      exportInvestmentToPDF(investment);
+    } catch (error) {
+      alert('Erro ao gerar PDF. Tente novamente.');
+      console.error('Erro ao exportar PDF:', error);
     }
   };
 
@@ -172,7 +183,26 @@ export const TransactionHistory = ({ investments, onInvestmentsUpdate }: Transac
                     </div>
                   </div>
                   
-                  <div className="ml-auto sm:ml-4 flex-shrink-0">
+                  <div className="ml-auto sm:ml-4 flex-shrink-0 flex items-center gap-2">
+                    <button
+                      onClick={(e) => handleExportPDF(investment, e)}
+                      className="p-2 text-gray-400 hover:text-futuristic-blue-600 hover:bg-futuristic-blue-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      title="Exportar como PDF"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </button>
                     <svg
                       className={`w-5 h-5 sm:w-6 sm:h-6 text-gray-400 transition-transform duration-300 ${
                         expandedId === investment.id ? 'transform rotate-180' : ''
