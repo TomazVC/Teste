@@ -1,4 +1,4 @@
-import { Asset, AssetType, InvestmentItem, MonthlyPortfolio } from '../types/asset';
+import { Asset, AssetType, Investment, InvestmentItem, MonthlyPortfolio } from '../types/asset';
 import { isUnitBased, isValueBased } from '../types/asset';
 
 export const calculateNewAveragePrice = (
@@ -140,7 +140,7 @@ export const calculateMonthlyPortfolio = (
     }
 
     // Aplicar investimento
-    investment.items.forEach((item) => {
+    investment.items.forEach((item: InvestmentItem) => {
       const asset = currentState.get(item.assetId);
       if (asset) {
         const updatedAsset = updateAssetAfterInvestment(asset, item);

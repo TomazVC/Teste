@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
 import { MonthlyPortfolio } from '../types/asset';
 import { AssetType, AssetTypeColors, AssetTypeLabels } from '../types/asset';
@@ -35,14 +36,14 @@ export const GrowthChart = ({ portfolio }: GrowthChartProps) => {
     Total: month.total,
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-lg">
           <p className="font-semibold text-gray-900 mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: {formatCurrency(entry.value)}
+              {entry.name}: {formatCurrency(entry.value as number)}
             </p>
           ))}
         </div>

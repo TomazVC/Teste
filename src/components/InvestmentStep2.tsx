@@ -1,4 +1,4 @@
-import { Asset, AssetType, InvestmentItem } from '../types/asset';
+import { Asset, InvestmentItem } from '../types/asset';
 import { isUnitBased, isValueBased } from '../types/asset';
 
 interface InvestmentStep2Props {
